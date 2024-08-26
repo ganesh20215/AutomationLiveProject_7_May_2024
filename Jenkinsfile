@@ -17,13 +17,13 @@ pipeline {
                 sh "${MAVEN_HOME}/bin/mvn clean install"
             }
         }
-          stage('Test') {
+        stage('Test') {
             steps {
                 // Run the Selenium test suite
                 sh "${MAVEN_HOME}/bin/mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml"
             }
         }
-          stage('Post Actions') {
+        stage('Post Actions') {
             steps {
                  // Archive the test results and any other artifacts
                  archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
