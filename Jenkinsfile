@@ -1,19 +1,33 @@
 pipeline {
     agent any
+        environment {
+            MAVEN_HOME = tool 'Maven' // Assuming Maven is installed and configured in Jenkins
+            JAVA_HOME = tool 'JDK17'  // Assuming JDK 11 is installed and configured in Jenkins
+        }
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Build World'
+                echo 'Checkout Repo'
+                git url: 'https://github.com/ganesh20215/AutomationLiveProject_7_May_2024.git', branch: 'main'
             }
         }
-        stage('Deploy') {
+        stage('Build') {
             steps {
-                echo 'Deploy World'
+                echo 'Build Project'
+                sh "${MAVEN_HOME}/bin/mvn clean install"
             }
         }
           stage('Test') {
             steps {
-                echo 'Test World'
+                // Run the Selenium test suite
+                sh "${MAVEN_HOME}/bin/mvn test -Dsurefire.suiteXmlFiles=src/test/resources/testng.xml"
+            }
+        }
+          stage('Post Actions') {
+            steps {
+                 // Archive the test results and any other artifacts
+                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+                 junit '**/target/surefire-reports/*.xml' // For TestNG results
             }
         }
     }
