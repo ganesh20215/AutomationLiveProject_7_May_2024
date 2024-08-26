@@ -7,13 +7,6 @@ pipeline {
                 sh "mvn test"
             }
         }
-        stage('Post Actions') {
-            steps {
-                 // Archive the test results and any other artifacts
-                 archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-                 junit '**/target/surefire-reports/*.xml' // For TestNG results
-            }
-        }
     }
 	post
 	{
