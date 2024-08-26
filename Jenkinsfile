@@ -5,7 +5,7 @@ pipeline {
             JAVA_HOME = tool 'JDK17'  // Assuming JDK 11 is installed and configured in Jenkins
         }
     stages {
-        stage('Checkout') {
+/*         stage('Checkout') {
             steps {
                 echo 'Checkout Repo'
                 git url: 'https://github.com/ganesh20215/AutomationLiveProject_7_May_2024.git', branch: 'main'
@@ -16,7 +16,7 @@ pipeline {
                 echo 'Build Project'
                 sh "${MAVEN_HOME}/bin/mvn clean install"
             }
-        }
+        } */
         stage('Test') {
             steps {
                 // Run the Selenium test suite
